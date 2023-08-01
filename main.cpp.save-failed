@@ -1,0 +1,39 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int bestFit(double size[], int n, int c)
+{
+
+    int res = 0;
+    int bin_rem[n];
+
+    for (int i = 0; i < n; i++) {
+        int j;
+        int min = c + 1, bi = 0;
+
+        for (j = 0; j < res; j++) {
+            if (bin_rem[j] >= size[i] && bin_rem[j] - size[i] < min) {
+                bi = j;
+                min = bin_rem[j] - size[i];
+            }
+        }
+
+        if (min == c + 1) {
+            bin_rem[res] = c - size[i];
+            res++;
+        }
+        else
+            bin_rem[bi] -= size[i];
+    }
+    return res;
+}
+
+
+int main()
+{
+    double size[] = {0.2,0.5,0.4,0.7,0.1,0.3,0.8};
+    int c = 1;
+    int n = sizeof(size) / sizeof(size[0]);
+    cout << "Number of bins required in Best Fit : "<< bestFit(size, n, c);
+    return 0;
+}
